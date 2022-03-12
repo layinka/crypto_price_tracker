@@ -1,4 +1,4 @@
-<span [style.color]="color"
+<!-- <span [style.color]="color"
   [cpToggle]="true"
   [cpDialogDisplay]="'inline'"
   [cpPositionRelativeToArrow]="true"
@@ -7,4 +7,28 @@
   [cpOKButton]="true"
   (colorPickerChange)="updateColor($event)"
   (colorPickerSelect)="colorize()">
-</span>
+</span> -->
+
+<h1> Crypto Price Tracker</h1>
+<h4>Powered by: <img src="https://www.covalenthq.com/static/images/covalent-logo.png" alt="Covalent Logo" style="width:11%;height:11%;"></h4>
+<br>
+
+
+<table id="tokenTable" class="content-table">
+  <thead>
+      <tr>
+          <th></th>
+          <th>Token</th>
+          <th>Symbol</th>
+          <th>Price</th>
+      </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let token of prices">
+      <td><img src="{{token.logo_url}}" style="width:40px;height:40px;"></td>
+			<td> {{token.contract_name}} </td>
+			<td> {{token.contract_ticker_symbol}} </td>
+			<td> {{token.quote_rate| number: '1.2-2'}} </td>
+    </tr>
+  </tbody>
+</table>

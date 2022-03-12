@@ -1,7 +1,7 @@
 {
-  "name": "Great Extension",
+  "name": "Crypto Price Tracker",
   "version": "1.0",
-  "description": "Build an Extension with Angular",
+  "description": "Display key coin spot prices",
   "manifest_version": 2,
   "permissions": [
       "activeTab",
@@ -14,7 +14,9 @@
           "runtime.js"
       ]
   },
-  "page_action": {
-      "default_popup": "index.html"
-  }
+  
+  "browser_action": {
+    "default_icon": "assets/omw_icon.png",
+    "default_popup": "index.html"
+   }
 }

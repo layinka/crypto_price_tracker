@@ -1,6 +1,6 @@
 {
-  "name": "angular-chrome-extension",
-  "version": "0.0.0",
+  "name": "crypto-price-tracker-extension",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

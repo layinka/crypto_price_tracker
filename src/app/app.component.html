@@ -8,27 +8,43 @@
   (colorPickerChange)="updateColor($event)"
   (colorPickerSelect)="colorize()">
 </span> -->
+<app-toast aria-live="polite" aria-atomic="true"></app-toast>
 
-<h1> Crypto Price Tracker</h1>
-<h4>Powered by: <img src="https://www.covalenthq.com/static/images/covalent-logo.png" alt="Covalent Logo" style="width:11%;height:11%;"></h4>
+<h1> Crypto Owl <img src="/assets/logo-white.png" class="img-fluid" style="width:40px;"> </h1>
+<h2 class="text-white"><small>Price Tracker</small></h2>
+
 <br>
 
+<div class="container">
+  <div class="row">
+    <div class="col-12 d-flex align-items-end align-items-right ">
+      <button (click)="openAddCoin()" class="btn btn-primary">Add Coin</button>
+    </div>
 
-<table id="tokenTable" class="content-table">
-  <thead>
-      <tr>
-          <th></th>
-          <th>Token</th>
-          <th>Symbol</th>
-          <th>Price</th>
-      </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let token of prices">
-      <td><img src="{{token.logo_url}}" style="width:40px;height:40px;"></td>
-			<td> {{token.contract_name}} </td>
-			<td> {{token.contract_ticker_symbol}} </td>
-			<td> {{token.quote_rate| number: '1.2-2'}} </td>
-    </tr>
-  </tbody>
-</table>
+    <div class="col-12 mt-4">
+      <table id="tokenTable" class=" table table-responsive table-striped bg-dark text-white">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Token</th>
+                <th>Symbol</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let token of prices">
+            <td><img src="{{token.logo_url}}" class="img-fluid" style="width:40px;height:40px;"></td>
+            <td> {{token.contract_name}} </td>
+            <td> {{token.contract_ticker_symbol}} </td>
+            <td> ${{token.quote_rate| number: '1.2-2'}} </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<h4>Powered by: <img src="https://www.covalenthq.com/static/images/covalent-logo.png" alt="Covalent Logo" style="width:13%;" class="img-fluid"></h4>
+

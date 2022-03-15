@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h4 class="modal-title" style="">Add Ticker!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    
+    <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <div class="form-group text-left">
+            <label class="text-left"><b>Ticker</b></label>
+            <input type="text"   formControlName="ticker" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.ticker.errors }" />
+            <div class="text-center">
+              <small  >Ticker of the coins e.g. DAI</small>
+            </div>
+            <div *ngIf="submitted && f.ticker.errors" class="invalid-feedback">
+              <div *ngIf="f.ticker.errors.required">Ticker is required</div>
+              <div *ngIf="f.ticker.errors.minlength">Ticker should be greater than 2 characters</div>
+            </div>
+          </div>
+
+
+                    
+
+          <div class="form-row">
+              <div class="form-group col">
+                  <button type="submit" [disabled]="loading" class="btn btn-primary "  style="border-color: #f7fbf8;">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Submit
+                  </button>
+                  
+              </div>
+              
+          </div>
+      </form>
+
+</div>
+<!-- <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+</div> -->

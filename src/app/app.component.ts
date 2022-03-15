@@ -1,4 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddTokenModalComponent } from './add-token-modal/add-token-modal.component';
 import { DefaultTickers } from './constants';
 
 @Component({
@@ -8,7 +10,7 @@ import { DefaultTickers } from './constants';
 })
 export class AppComponent implements OnInit {
   color = '#ffffff';
-  tickers =[];
+  tickers: any[] = [];
 
   prices: Array<any> =[];
 
@@ -19,8 +21,22 @@ export class AppComponent implements OnInit {
   covalentAPI = "https://api.covalenthq.com/v1"
   APIEndpoint = '/pricing/tickers'
 
-  constructor(private zone: NgZone){
+  constructor(private zone: NgZone, private modalService: NgbModal){
     
+  }
+
+
+  async openAddCoin() {
+    const modalRef = this.modalService.open(AddTokenModalComponent);
+    modalRef.componentInstance.name = 'World';
+    const newTicker = await modalRef.result;
+    this.tickers.push(newTicker);
+
+    chrome.storage.sync.set({"coins":  this.tickers});
+
+    console.log(this.tickers)
+    this.updatePrices();
+
   }
 
   async ngOnInit() {
@@ -54,7 +70,7 @@ export class AppComponent implements OnInit {
 
   public async updatePrices  (){
 	
-    // Covalent API request setup
+    // Covalent API request setup 
     const url = new URL(`${this.covalentAPI}${this.APIEndpoint}/`);
     //@ts-ignore
     url.search = new URLSearchParams({

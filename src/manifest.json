@@ -1,5 +1,5 @@
 {
-  "name": "Crypto Price Tracker",
+  "name": "Crypto Owl",
   "version": "1.0",
   "description": "Display key coin spot prices",
   "manifest_version": 2,
@@ -16,7 +16,7 @@
   },
   
   "browser_action": {
-    "default_icon": "assets/omw_icon.png",
+    "default_icon": "assets/logo.png",
     "default_popup": "index.html"
    }
 }

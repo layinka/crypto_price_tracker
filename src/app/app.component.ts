@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { environment } from '../environments/environment';
 import { AddTokenModalComponent } from './add-token-modal/add-token-modal.component';
 import { DefaultTickers } from './constants';
 
@@ -14,8 +15,10 @@ export class AppComponent implements OnInit {
 
   prices: Array<any> =[];
 
+  updateInterval: any;
+
   // Set your API key here
-  APIKEY = 'ckey_5ce74e07bddd4d1f8c98f5fb6c9';
+  APIKEY = environment.apiKey;
 
   // Set the Covalent API
   covalentAPI = "https://api.covalenthq.com/v1"
@@ -29,19 +32,22 @@ export class AppComponent implements OnInit {
   async openAddCoin() {
     const modalRef = this.modalService.open(AddTokenModalComponent);
     modalRef.componentInstance.name = 'World';
+
     const newTicker = await modalRef.result;
-    this.tickers.push(newTicker);
+    if(this.tickers.indexOf(newTicker)<0){
+      this.tickers.push(newTicker);
+      chrome.storage.sync.set({"coins":  this.tickers});
+      this.updatePrices();
+    }
+    
 
-    chrome.storage.sync.set({"coins":  this.tickers});
-
-    console.log(this.tickers)
-    this.updatePrices();
+    
 
   }
 
   async ngOnInit() {
     chrome.storage.sync.get(['coins'], async ({coins}) => {
-      console.log('Coins   Result is ', JSON.stringify( coins) );
+      
       if(  !coins || coins.length <=0 ){
         chrome.storage.sync.set({"coins":  DefaultTickers},async () => {
           console.log("Storage of Tickers Succesful");
@@ -49,6 +55,12 @@ export class AppComponent implements OnInit {
           this.zone.run(()=>{
             this.updatePrices().then(()=>{})
           })
+
+          //Start Timer
+
+          this.updateInterval = setInterval(() => {
+            this.updatePrices(); 
+          }, 20000);
           //await this.updatePrices();
         });
       }else{
@@ -100,6 +112,12 @@ export class AppComponent implements OnInit {
     //   //   `<td> $${parseFloat(token.quote_rate).toFixed(2)} </td>`
     //   // })
     // })
+  }
+
+  ngOnDestroy() {
+    if (this.updateInterval) {
+      clearInterval(this.updateInterval);
+    }
   }
 
   

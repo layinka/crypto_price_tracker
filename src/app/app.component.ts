@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   updateInterval: any;
 
   // Set your API key here
-  APIKEY = environment.apiKey;
+  APIKEY =  environment.apiKey;
 
   // Set the Covalent API
   covalentAPI = "https://api.covalenthq.com/v1"
